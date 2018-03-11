@@ -22,9 +22,12 @@
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.15.4",
     "jsdom": "^11.2.0",
+    "metascraper": "^3.9.2",
+    "node-fetch": "^2.1.1",
     "page-metadata-parser": "^1.1.0",
-    "request": "^2.81.0",
-    "request-promise-native": "^1.0.4",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
+    "request-promise-native": "^1.0.5",
     "requestify": "^0.2.5"
   }
 }

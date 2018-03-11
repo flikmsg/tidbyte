@@ -1,6 +1,7 @@
-const { getMetadata } = require('page-metadata-parser'),
-    { JSDOM } = require('jsdom')
-    request = require('request-promise-native'),
+const 
+    metascraper = require('metascraper'),
+    { JSDOM } = require('jsdom'),
+     fetch = require('node-fetch'),
     userAgent = process.env.USERAGENT || `tidbyteBot (like TwitterBot)`
 
 module.exports = async function(req, res, url, cache) {
@@ -9,9 +10,9 @@ module.exports = async function(req, res, url, cache) {
         if(mem) return succeed(res, mem)
     }
     try {
-        let resp = new JSDOM(await request(url))
-        return succeed(res, getMetadata(resp.window.document, url))
+        return succeed(res, await metascraper({html: await (await fetch(url)).text(), url}))
     }catch(e) {
+        console.error(e)
         return fail(res, "Internal server error")
     }
 }

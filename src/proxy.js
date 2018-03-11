@@ -9,30 +9,13 @@ module.exports = async function(req, res, url, cache) {
         if(mem) return succeed(res, mem)
     }
     try {
-        return succeed(res, await req(url))
+        return req.pipe(request(url)).pipe(res)
     }catch(e) {
         return fail(res, "Internal server error")
     }
 }
-
-function req(url) {
-    return new Promise((resolve, reject) => {
-        request(url, (err, response, body) => {
-            if(err)
-                return reject(err)
-            return resolve({response, body})
-        })
-    })
-}
-
 function succeed(res, data) {
-    return res.status(200).json({
-        server: "tidbyte", 
-        success: true,
-        status: 200,
-        data,
-        notice: "Remember to get images securely, see /proxy"
-    })
+    return res.pipe
 }
 
 function fail(res, reason, status=500) {

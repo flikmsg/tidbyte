@@ -26,10 +26,13 @@ app.get('/proxy', (req, res) =>
 if(updatekey !== "insecure") app.get(`/update/${updatekey}`, update)
 else console.info("Update key not set.")
 
+app.get('/proxy/:url*', (req, res) => 
+    proxy(req, res, req.params.url, redisManager ? redisManager.memory : undefined))
+
 app.get('/:url*', (req, res) => 
     parseRoute(req, res, req.params.url, redisManager ? redisManager.memory : undefined))
 
-    
+
 app.use('*', (req, res) => 
     res.status(404).json({ server: "tidbyte", success: false, status: 404, reason: "no value provided", comment: "Use GET /:url or POST / with url in request body" }))
 
